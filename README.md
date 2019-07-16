@@ -1,2 +1,2 @@
-# Code-Complate
-Simple Code-Complate
+# Code-Template
+Simple Code-Template
