@@ -71,6 +71,21 @@ void spfa(int x)
 
 int main()
 {
- 
+	 while(cin>>n>>m)
+	    {
+		for(int i = 1 ;i<=n;i++)
+		{
+		    head[i] = -1;
+		    for(int j = 1; j<= m;j++)
+		    {
+			int a,b ,w;
+			cin>>a>>b>>w;
+			Node[i].v = a;
+			Node[i].w = w;
+			Node[i].next = head[a];
+			head[a] = i;
+		    }
+		}
+	    }
     return 0;
 }
