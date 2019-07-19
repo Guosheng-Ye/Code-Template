@@ -1,9 +1,10 @@
 /*************************************************************************
-	> File Name: spfa.cpp
+	> File Name: SPFA链式.cpp
 	> Author: YeGuoSheng
 	> Description:  
-	> Created Time: 2019年07月19日 星期五 09时21分31秒
+	> Created Time: 2019年07月20日 星期六 07时09分05秒
  ************************************************************************/
+
 #include<iostream>
 #include<stdio.h>
 #include<cstring>
@@ -18,72 +19,58 @@
 #include<algorithm>
 #include<iomanip>
 using namespace std;
-const int maxn = 1000;
-const int INF = 0x3f3f3f3f;
-
-int vis[maxn];
-int cnt[maxn];
-int n;
-int m;
+const int maxn=10005;
+const int inf = 0x3f3f3f3f;
+int head[maxn];   //head[u]表示以head为出发点的邻接表表头在数组Node中的位置，开始时所有元素初始化为-1
+int d[maxn];      //记录起点到个点的最短距离
+bool vis[maxn];   //标记数组是否进入队列
+int n,m,cnt;
 
 struct node
 {
-    int to;  
-    int w;
-    int next;
-}edges[maxn];
-int head[maxn],edge;
-int dis[maxn];
+    int v;    //所存路径的终点
+    int w;    //权值
+    int next;     //（重点）与当前所存路径同起点的上一条路径
+}Node[maxn];
 
-void ini()
+void add(int u,int v,int w)  //链式前向星存图
 {
-    fill(head,head+maxn,-1);
-    edge=0;
+    Node[cnt].v=v;
+    Node[cnt].w=w;
+    Node[cnt].next=head[u];
+    head[u]=cnt++;
 }
-void addedge(int u,int v,int w)
+void spfa(int x)
 {
-    edges[edge].to=v;
-    edges[edge].w=w;
-    edges[edge].next=head[u];
-    head[u]=edge++;
-}
-int SPFA(int s,int t)
-{
-    memset(dis,INF,sizeof(dis));
-    memset(vis,false,sizeof(vis));
-    queue<int>que;
-    dis[s]=0;
-    vis[s]=true;
-    que.push(s);
-    while(!que.empty())
+    memset(vis,0,sizeof(vis));
+    memset(d,inf,sizeof(d));
+    queue<int>q;
+    vis[x]=1;
+    d[x]=0;    //x为原点
+    q.push(x);
+    while(!q.empty())
     {
-        int u=que.front();
-        que.pop();
-        vis[u]=false;
-        for(int i=head[u];i!=-1;i=edges[i].next)
+        int t=q.front();
+        q.pop();
+        vis[t]=0;            //记得取消标记  与BFS不同
+        for(int i=head[t];i!=-1;i=Node[i].next)   //直到以t为起点的路径全部加入队列才结束这一次的 for 循环（也就是直到找到第一个被输入的项，其next值为-1）
         {
-            int v=edges[i].to;
-            int w=edges[i].w;
-            if(dis[v]>dis[u]+w)
+            node e = Node[i];
+            if(d[e.v]>d[t]+e.w)      //松弛操作
             {
-                dis[v]=dis[u]+w;
-                if(!vis[v])
+                d[e.v]=d[t]+e.w;
+                if(!vis[e.v])        //若被搜索到的节点不在队列q中，则把 e.v 加入到队列中
                 {
-                    vis[v]=true;
-                    que.push(v);
+                    q.push(e.v);
+                    vis[e.v]=1;
                 }
-                //if(++cnt[v] >=n)
-                //{
-                //  return true;
-                //}
-                //
-                //
             }
         }
     }
-    return dis[t];
 }
+
 int main()
 {
+ 
     return 0;
 }
