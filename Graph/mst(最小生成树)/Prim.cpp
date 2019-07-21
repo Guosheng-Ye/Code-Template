@@ -1,7 +1,7 @@
 /*************************************************************************
 	> File Name: prim.cpp
 	> Author: YeGuoSheng
-	> Description:  
+	> Description:  与Dijkstra算法思想类似，贪心的选择最短边
 	> Created Time: 2019年07月18日 星期四 08时49分49秒
  ************************************************************************/
 
@@ -22,7 +22,7 @@ using namespace std;
 const int INF = 0x3f3f3f3f;
 const int maxn = 10001;
 int Graph[maxn][maxn];
-int lowcost[maxn];//与生成树中想连边的最
+int lowcost[maxn];//与生成树中相连边的最小边
 bool vetSet[maxn];//标记结点是否在生成树中
 int n;
 int edge;
@@ -48,7 +48,7 @@ void Create()
 void Prim(int n,int v0,int & sum)
 {
 	int v,k;
-	int min;
+	int mindist;
 	for(int i = 0; i < n ;i++)
 	{
 		lowcost[i] = Graph[v0][i];//初值为各顶点v0之间的距离
@@ -59,13 +59,13 @@ void Prim(int n,int v0,int & sum)
 	vetSet[v] = true;
 	for(int i = 0; i < n;i++)
 	{
-		min = INF;
+		mindist = INF;
 		for(int j = 0;j < n;j++)
 		{
-			if((!vetSet[j]) && lowcost[j] < min)//找到当前为加入生成树的最小的边
+			if((!vetSet[j]) && lowcost[j] < mindist)//找到当前要加入生成树的最小的边
 			{
-				min = lowcost[j];
-				k = j;
+				mindist = lowcost[j];//更新min
+				k = j;//记录结点编号
 			}
 		}
 		vetSet[k] = true;
