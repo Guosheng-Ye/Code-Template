@@ -1,7 +1,7 @@
 /*************************************************************************
 	> File Name: p4779.cpp
 	> Author: YeGuoSheng
-	> Description:  
+	> Description:  注释掉的为跟踪
 	> Created Time: 2019年07月20日 星期六 16时46分11秒
  ************************************************************************/
 #include<iostream>
@@ -36,7 +36,7 @@ struct Edge//建图
 }edge[maxn];
 
 void add(int x,int y,int w)// x -> y == w
-{//链式向前星
+{//链式向前星存储法
     edge[++cnt].v = y;
     edge[cnt].w = w;
     edge[cnt].nxt = head[x];
@@ -49,7 +49,7 @@ struct node
     int d;
     bool operator< (const node& rhs)const
     {
-        return d >rhs.d;
+        return d >rhs.d;//距离越小越先出队
     }
 };
 
@@ -57,8 +57,7 @@ priority_queue<node> q;
 void Dijkstra(int s) 
 {  
     for(int i=1;i<=n;i++)
-        dist[i]=2147483647;
-    dist[s]=0;
+	 dist[i] = (i==s)? 0:2147483647;
     priority_queue<node> Q; 
     Q.push((node){s,0});//开始结点进队
     while (!Q.empty()) 
@@ -90,16 +89,6 @@ void Dijkstra(int s)
         }
     }
 }
-/*
- 4 7 1
- 1 2
- 2 3
- 3 4
- 1 3
- 4 1
- 1 5
- 4 5
- */
 int main()
 {
         cin>>n>>m>>p;
@@ -119,6 +108,7 @@ int main()
         //     cout<<"edge["<<i<<"] ="<<edge[i].v<<" next"<<edge[i].nxt<<endl;
         // }
         //cout<<"~~~~~~~~~~~~~~~~~~~~~"<<endl;
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~以下为解决poj3268
         Dijkstra(p);//p 到其他点的最小距离
         for(int i = 1;i <=n;i++)
         {
