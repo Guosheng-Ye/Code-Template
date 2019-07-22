@@ -33,12 +33,12 @@ struct edge//存放边信息
     int w;
 };
 edge arr[maxn];
-
+/*
 bool cmp(const edge &a,const edge &b)
 {
-    return a.w > b.w; //求最大生成书，倒序排序
+    return a.w > b.w; //求最大生成树，倒序排序
 }
-
+*/
 void Init()
 {
     for(int i = 0 ;i < n;i++)
